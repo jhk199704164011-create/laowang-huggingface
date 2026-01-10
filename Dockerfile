@@ -1,13 +1,7 @@
-FROM node:20-alpine3.20
-
-WORKDIR /tmp
-
-COPY index.js package.json ./
-
-EXPOSE 3000
-
-RUN apk update && apk add --no-cache bash openssl curl &&\
-    chmod +x index.js &&\
-    npm install
-
+FROM node:20
+WORKDIR /app
+COPY . .
+# Debian 系统必须用 apt-get
+RUN apt-get update && apt-get install -y bash openssl curl && npm install
+EXPOSE 7860
 CMD ["node", "index.js"]
